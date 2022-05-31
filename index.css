@@ -1,0 +1,38 @@
+.head {
+  font-size: 40px;
+  text-align: center;
+}
+
+.content {
+  margin: 0 auto;
+  text-align: center;
+  width: 25%;
+}
+
+.content > form > input {
+  padding: 0;
+  margin: 5px;
+  max-width: 100px;
+  min-height: 100px;
+  font-size: 50px;
+  text-align: center;
+  text-transform: uppercase;
+  border-color: black;
+  background-color: azure;
+}
+
+#submit_button {
+  text-align: center;
+  padding: 15px;
+  margin: 30px;
+  background-color: gray;
+  width: 20%;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: whitesmoke;
+}
+
+input[type="button"]#submit_button:hover {
+  background-color: rgb(69, 67, 67);
+}
