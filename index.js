@@ -14,20 +14,24 @@ console.log("helloworld");
 const inputs = document.querySelectorAll("input");
 const userInputForm1 = document.getElementById("form1").elements;
 const submitButton = document.getElementById("submit_button");
+
 let inputArray = [];
 const answer = "dirty";
+const validWords = ['audio', 'brush', 'coach', 'dirty', 'entry']
 
 function keylog(e) {
   var stringId = this.id;
-  const idValue = document.getElementById(stringId).value;
+  // const idValue = document.getElementById(stringId).value;
   var currentPosition = parseInt(stringId[stringId.length - 1]);
   // const regex = /\b[^\d\W]+\b/g;
-
   const key = e.key;
+
+  console.log(key)
 
   if (key !== "Backspace" && currentPosition < 5) {
     document.querySelector(`#form1_${currentPosition + 1}`).focus();
-  } else if (key === "Backspace" && currentPosition > 1) {
+  } 
+  else if (key === "Backspace" && currentPosition > 1) {
     document.querySelector(`#form1_${currentPosition - 1}`).focus();
   }
 }
@@ -35,9 +39,10 @@ function keylog(e) {
 // function keydown(e) {
 //   var stringId = this.id;
 //   var currentPosition = parseInt(stringId[stringId.length - 1]);
-//   const key = e.key;
+//   const inputType = e.inputType;
 
-//   if (key === "Backspace" && currentPosition > 1) {
+//   console.log(inputType)
+//   if (inputType === "deleteContentBackward" && currentPosition > 1) {
 //     document.querySelector(`#form1_${currentPosition - 1}`).focus();
 //   }
 // }
@@ -49,6 +54,9 @@ function submit() {
     inputArray.push(userInputForm1[i].value);
   }
 
+  // if input equal answer - boolean true
+  // if input is not equal answer and input is in validWords array - move to next form
+  // and the previous form is inaccesible
   if (inputArray.join("") === answer) {
     boolean = true;
   } else {
@@ -60,7 +68,7 @@ function submit() {
 
 inputs.forEach((input) => {
   input.addEventListener("keyup", keylog);
-  // input.addEventListener("keydown", keydown);
+  // input.addEventListener("beforeinput", keydown);
 });
 
 submitButton.addEventListener("click", submit);
@@ -85,4 +93,4 @@ submitButton.addEventListener("click", submit);
 
 // should userinput be keydown and delete be keyup ?
 
-// Move to github pages
+
