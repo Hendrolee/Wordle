@@ -7,54 +7,51 @@ const submitButton = document.getElementById("submit_button");
 let inputArray = [];
 const answer = "dirty";
 const validWords = ["audio", "brush", "coach", "dirty", "entry"];
+let isKeyDown = false;
 
-function handler(e) {
+function keydownHandler(e) {
   var stringId = this.id;
   const idValue = document.getElementById(stringId).value;
   var currentPosition = parseInt(stringId[stringId.length - 1]);
   // const regex = /\b[^\d\W]+\b/g;
   const key = e.key;
-  console.log(stringId);
 
-  // e.preventDefault();
-  if (key !== "Backspace" && key !== "Tab") {
-    // document
-    //   .querySelector(`#form1_${currentPosition}`)
-    //   .setAttribute("value", key);
+  if (!isKeyDown) {
+    isKeyDown = true;
 
-    document.querySelector(`#form1_${currentPosition}`).select();
-  }
+    if (key !== "Backspace" && key !== "Tab") {
+      document.querySelector(`#form1_${currentPosition}`).focus();
+    }
 
-  if (
-    key !== "Backspace" &&
-    idValue.trim().length !== 0 &&
-    currentPosition < 5
-  ) {
-    document.querySelector(`#form1_${currentPosition + 1}`).select();
+    if (
+      key !== "Backspace" &&
+      idValue.trim().length !== 0 &&
+      currentPosition < 5
+    ) {
+      document.querySelector(`#form1_${currentPosition + 1}`).focus();
+    }
   }
 }
 
-function backspaceHandler(e) {
+function keyupHandler(e) {
   var stringId = this.id;
   const idValue = document.getElementById(stringId).value;
   var currentPosition = parseInt(stringId[stringId.length - 1]);
   const key = e.key;
 
-  console.log(stringId);
+  // console.log(stringId);
   if (key === "Backspace" && currentPosition > 1) {
-    // document
-    //   .querySelector(`#form1_${currentPosition}`)
-    //   .removeAttribute("value");
-    document.querySelector(`#form1_${currentPosition - 1}`).select();
+    document.querySelector(`#form1_${currentPosition - 1}`).focus();
   }
+  isKeyDown = false;
 }
 
 inputs.forEach((input) => {
-  input.addEventListener("keydown", handler);
-  input.addEventListener("keyup", backspaceHandler);
+  input.addEventListener("keydown", keydownHandler);
+  input.addEventListener("keyup", keyupHandler);
 });
 
-function submit() {
+function submit(e) {
   let boolean = false;
   for (let i = 0; i < userInputForm1.length; i++) {
     inputArray.push(userInputForm1[i].value);
@@ -69,6 +66,7 @@ function submit() {
     inputArray = [];
     boolean = false;
   }
+  console.log(inputArray);
   console.log(boolean);
 }
 
@@ -81,7 +79,7 @@ submitButton.addEventListener("click", submit);
 // Move to next form if valid word but wrong answer,
 // provides array of words - maybe API of 5 words only ?
 
-// Fix:
+// Fixed:
 // The focus of input field:
 // - when user delete, stays on the same input field
 // atm when user press "backspace" it goes back to previous field
@@ -91,5 +89,12 @@ submitButton.addEventListener("click", submit);
 // OR
 // when user press key, stays on the field
 // when user press another key, move to the next field and fill in the key value
-
 // should userinput be keydown and delete be keyup ?
+
+// The focus of input field when user hold key:
+// - should stay on the current field
+// - use setTimeout()
+// used isKeyDown boolean
+
+// Fix:
+// on second submit after first submit, the function did not record user input

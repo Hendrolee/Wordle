@@ -20,7 +20,7 @@
   text-transform: uppercase;
   border-color: black;
   background-color: azure;
-  caret-color: rgba(0, 0, 0, 0);
+  /* caret-color: rgba(0, 0, 0, 0); */
 }
 
 #submit_button {
