@@ -56,6 +56,7 @@ function submit(e) {
   for (let i = 0; i < userInputForm1.length; i++) {
     inputArray.push(userInputForm1[i].value);
   }
+  console.log(inputArray);
 
   // if input equal answer - boolean true
   // if input is not equal answer and input is in validWords array - move to next form
@@ -66,7 +67,6 @@ function submit(e) {
     inputArray = [];
     boolean = false;
   }
-  console.log(inputArray);
   console.log(boolean);
 }
 
