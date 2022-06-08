@@ -1,7 +1,6 @@
 console.log("hello world");
 
 const answer = "henry";
-const form1 = document.querySelector("#form1");
 const inputs = document.querySelectorAll("input");
 const submitButton = document.querySelector("#submit_button");
 let array1 = [];
@@ -98,9 +97,17 @@ const submitButtonHandler = (e) => {
       // ----- Start ----- //
       isValidName = true;
       array1 = [];
+      // ----- End ----- //
+
+      // disable previous forms
+      // ----- Start -----//
+      let elements = document.querySelector(`#form${count}`).elements;
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].readOnly = true;
+      }
+      // ----- End ---- //
       count += 1;
       console.log(count);
-      // ----- End ----- //
 
       console.log("close!!");
     } else {
@@ -118,5 +125,6 @@ submitButton.addEventListener("click", () => {
 // checks validity of words //
 // reveal tiles function
 // move on to the next form //
+// previous form is inaccessible after valid input is submited //
 // display different background for any word that is within the answer
 // disable access for previous form
