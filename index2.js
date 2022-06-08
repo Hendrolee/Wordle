@@ -2,6 +2,7 @@ console.log("hello world");
 
 const answer = "henry";
 const inputs = document.querySelectorAll("input");
+let count = 1; // to move input field in querySelector
 const submitButton = document.querySelector("#submit_button");
 let array1 = [];
 const playersName = [
@@ -32,15 +33,7 @@ const playersName = [
   "y",
   "z",
 ];
-let isValidName = false;
-let count = 1;
 
-// const inputFormSelector = () => {
-//   let count = 1;
-//   if (!isValidName && !count > 6) {
-//     document.querySelector(`#form${count}_${array1.length - 1}`).focus();
-//   }
-// };
 const updateDisplayPanel = () => {
   for (let i = 0; i < 5; i++) {
     document
@@ -57,7 +50,7 @@ const updateDisplayPanel = () => {
 const keyupHandler = (e) => {
   const key = e.key;
 
-  if (key.length === 1 && key.match(/[a-z]/i)) {
+  if (key.length === 1 && key.match(/[a-z]/i) && count < 7) {
     if (array1.length === 5) {
       return;
     }
@@ -80,7 +73,6 @@ const keyupHandler = (e) => {
   // console.log("Array", array1);
 };
 
-// form1.addEventListener("keyup", keyupHandler);
 inputs.forEach((input) => {
   input.addEventListener("keyup", keyupHandler);
 });
@@ -93,19 +85,16 @@ const submitButtonHandler = (e) => {
     } else if (inputString !== answer && playersName.includes(inputString)) {
       // reveal tiles function
 
-      // focus on next form
-      // ----- Start ----- //
-      isValidName = true;
-      array1 = [];
-      // ----- End ----- //
-
       // disable previous forms
       // ----- Start -----//
+      array1 = [];
       let elements = document.querySelector(`#form${count}`).elements;
       for (let i = 0; i < elements.length; i++) {
         elements[i].readOnly = true;
       }
       // ----- End ---- //
+
+      // count is used for moving to the next form
       count += 1;
       console.log(count);
 
@@ -125,6 +114,9 @@ submitButton.addEventListener("click", () => {
 // checks validity of words //
 // reveal tiles function
 // move on to the next form //
+
 // previous form is inaccessible after valid input is submited //
+// --- alternative ---
+// all other forms are readOnly except current form
+
 // display different background for any word that is within the answer
-// disable access for previous form
