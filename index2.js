@@ -1,5 +1,9 @@
 console.log("hello world");
 
+window.onload = () => {
+  document.querySelector("#form1_0").focus();
+};
+
 const answer = "henry";
 const inputs = document.querySelectorAll("input");
 let count = 1; // to move input field in querySelector
