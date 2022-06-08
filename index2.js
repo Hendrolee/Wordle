@@ -16,7 +16,7 @@ const playersName = [
   "henry",
   "iwobi",
   "jones",
-  "keane",
+  "kante",
   "lopez",
   "messi",
   "neuer",
@@ -75,6 +75,7 @@ const keyupHandler = (e) => {
 
 inputs.forEach((input) => {
   input.addEventListener("keyup", keyupHandler);
+  input.readOnly = true;
 });
 
 const submitButtonHandler = (e) => {
@@ -84,15 +85,10 @@ const submitButtonHandler = (e) => {
       console.log("WINN!");
     } else if (inputString !== answer && playersName.includes(inputString)) {
       // reveal tiles function
+      // after tiles reveal, form is readOnly
 
-      // disable previous forms
-      // ----- Start -----//
+      // reseting array to empty
       array1 = [];
-      let elements = document.querySelector(`#form${count}`).elements;
-      for (let i = 0; i < elements.length; i++) {
-        elements[i].readOnly = true;
-      }
-      // ----- End ---- //
 
       // count is used for moving to the next form
       count += 1;
@@ -113,6 +109,9 @@ submitButton.addEventListener("click", submitButtonHandler);
 
 // previous form is inaccessible after valid input is submited //
 // --- alternative ---
-// all other forms are readOnly except current form
+// all other forms are readOnly except current form //
 
 // display different background for any word that is within the answer
+
+// why there is no selector when all inputs are readOnly ?
+// Because letter is rendered when key is pressed (setAttribute/removeAttribute)
