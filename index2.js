@@ -2,6 +2,7 @@ console.log("hello world");
 
 const answer = "henry";
 const form1 = document.querySelector("#form1");
+const inputs = document.querySelectorAll("input");
 const submitButton = document.querySelector("#submit_button");
 let array1 = [];
 const playersName = [
@@ -45,7 +46,7 @@ const updateDisplayPanel = () => {
   }
 };
 
-form1.addEventListener("keyup", (e) => {
+const keyupHandler = (e) => {
   const key = e.key;
 
   if (key.length === 1 && key.match(/[a-z]/i)) {
@@ -69,17 +70,24 @@ form1.addEventListener("keyup", (e) => {
   }
 
   // console.log("Array", array1);
+};
+
+// form1.addEventListener("keyup", keyupHandler);
+inputs.forEach((input) => {
+  input.addEventListener("keyup", keyupHandler);
 });
 
-const submitButtonHandler = () => {
+const submitButtonHandler = (e) => {
   if (array1.length === 5) {
     let inputString = array1.join("");
     if (inputString === answer) {
       console.log("WINN!");
     } else if (inputString !== answer && playersName.includes(inputString)) {
+      // reveal tiles function
+      // focus on next form
       console.log("close!!");
     } else {
-      console.log("try againn");
+      console.log("Not a valid player!");
     }
   }
 };
