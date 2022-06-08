@@ -33,16 +33,25 @@ const playersName = [
   "y",
   "z",
 ];
+let isValidName = false;
+let count = 1;
 
+// const inputFormSelector = () => {
+//   let count = 1;
+//   if (!isValidName && !count > 6) {
+//     document.querySelector(`#form${count}_${array1.length - 1}`).focus();
+//   }
+// };
 const updateDisplayPanel = () => {
   for (let i = 0; i < 5; i++) {
     document
-      .querySelector(`#form1_${i}`)
+      .querySelector(`#form${count}_${i}`)
       .setAttribute("value", array1[i] || "");
   }
 
   if (array1.length) {
-    document.querySelector(`#form1_${array1.length - 1}`).focus();
+    // inputFormSelector();
+    document.querySelector(`#form${count}_${array1.length - 1}`).focus();
   }
 };
 
@@ -84,7 +93,15 @@ const submitButtonHandler = (e) => {
       console.log("WINN!");
     } else if (inputString !== answer && playersName.includes(inputString)) {
       // reveal tiles function
+
       // focus on next form
+      // ----- Start ----- //
+      isValidName = true;
+      array1 = [];
+      count += 1;
+      console.log(count);
+      // ----- End ----- //
+
       console.log("close!!");
     } else {
       console.log("Not a valid player!");
@@ -97,8 +114,9 @@ submitButton.addEventListener("click", () => {
   // console.log(playersName.includes(array1.join("")));
 });
 
-// create submit button handler function
-// checks validity of words
-// move on to the next form
+// create submit button handler function //
+// checks validity of words //
+// reveal tiles function
+// move on to the next form //
 // display different background for any word that is within the answer
 // disable access for previous form
