@@ -6,32 +6,32 @@ let count = 1; // to move input field in querySelector
 const submitButton = document.querySelector("#submit_button");
 let array1 = [];
 const playersName = [
-  "adams",
-  "b",
+  "amavi",
+  "bowen",
   "cisse",
-  "d",
-  "e",
-  "f",
-  "giggs",
+  "depay",
+  "evans",
+  "fonte",
+  "gotze",
   "henry",
-  "i",
+  "iwobi",
   "jones",
-  "klose",
-  "l",
+  "keane",
+  "lopez",
   "messi",
   "neuer",
-  "ochoa",
-  "prilo",
-  "q",
+  "origi",
+  "pirlo",
+  "quinn",
   "ramos",
-  "s",
-  "tevez",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
+  "silva",
+  "tadic",
+  "ulloa",
+  "villa",
+  "watts",
+  "xhaka",
+  "yerry",
+  "zouma",
 ];
 
 const updateDisplayPanel = () => {
@@ -104,11 +104,7 @@ const submitButtonHandler = (e) => {
     }
   }
 };
-submitButton.addEventListener("click", () => {
-  submitButtonHandler();
-  // console.log(array1.join(""));
-  // console.log(playersName.includes(array1.join("")));
-});
+submitButton.addEventListener("click", submitButtonHandler);
 
 // create submit button handler function //
 // checks validity of words //
