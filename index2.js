@@ -74,7 +74,7 @@ const keyupHandler = (e) => {
 };
 
 inputs.forEach((input) => {
-  input.addEventListener("keyup", keyupHandler);
+  input.addEventListener("keydown", keyupHandler);
   input.readOnly = true;
 });
 
