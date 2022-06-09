@@ -76,7 +76,6 @@ const keyupHandler = (e) => {
   if (key === "Enter") {
     submitButtonHandler();
   }
-
   // console.log("Array", array1);
 };
 
