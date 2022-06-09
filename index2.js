@@ -45,10 +45,9 @@ const updateDisplayPanel = () => {
       .setAttribute("value", array1[i] || "");
   }
 
-  if (array1.length) {
-    // inputFormSelector();
-    document.querySelector(`#form${count}_${array1.length - 1}`).focus();
-  }
+  // if (array1.length) {
+  //   document.querySelector(`#form${count}_${array1.length - 1}`).focus();
+  // }
 };
 
 const keyupHandler = (e) => {
@@ -74,22 +73,25 @@ const keyupHandler = (e) => {
     // console.log("popping");
   }
 
+  if (key === "Enter") {
+    submitButtonHandler();
+  }
+
   // console.log("Array", array1);
 };
 
 inputs.forEach((input) => {
-  input.addEventListener("keydown", keyupHandler);
+  input.addEventListener("keyup", keyupHandler);
   input.readOnly = true;
 });
 
-const submitButtonHandler = (e) => {
+const submitButtonHandler = () => {
   if (array1.length === 5) {
     let inputString = array1.join("");
     if (inputString === answer) {
       console.log("WINN!");
     } else if (inputString !== answer && playersName.includes(inputString)) {
       // reveal tiles function
-      // after tiles reveal, form is readOnly
 
       // reseting array to empty
       array1 = [];
@@ -114,8 +116,10 @@ submitButton.addEventListener("click", submitButtonHandler);
 // previous form is inaccessible after valid input is submited //
 // --- alternative ---
 // all other forms are readOnly except current form //
+// Add Enter event for submission
 
 // display different background for any word that is within the answer
+// adapt phone screen size
 
 // why there is no selector when all inputs are readOnly ?
 // Because letter is rendered when key is pressed (setAttribute/removeAttribute)
