@@ -7,57 +7,87 @@
     <link rel="stylesheet" href="index.css" />
     <title>Wordle</title>
   </head>
-  <body >
+  <body>
     <header>
-      <h1>Wordle</h1>
+      <div class="title">Wordle</div>
     </header>
-    <div id="board-container">
-      <div class="board">
-        <form id="form1">
-          <input class="tile" id="form1_0" type="text" maxlength="1" />
-          <input class="tile" id="form1_1" type="text" maxlength="1" />
-          <input class="tile" id="form1_2" type="text" maxlength="1" />
-          <input class="tile" id="form1_3" type="text" maxlength="1" />
-          <input class="tile" id="form1_4" type="text" maxlength="1" />
-        </form>
-        <form id="form2">
-          <input class="tile" id="form2_0" type="text" maxlength="1" />
-          <input class="tile" id="form2_1" type="text" maxlength="1" />
-          <input class="tile" id="form2_2" type="text" maxlength="1" />
-          <input class="tile" id="form2_3" type="text" maxlength="1" />
-          <input class="tile" id="form2_4" type="text" maxlength="1" />
-        </form>
-        <form id="form3">
-          <input class="tile" id="form3_0" type="text" maxlength="1" />
-          <input class="tile" id="form3_1" type="text" maxlength="1" />
-          <input class="tile" id="form3_2" type="text" maxlength="1" />
-          <input class="tile" id="form3_3" type="text" maxlength="1" />
-          <input class="tile" id="form3_4" type="text" maxlength="1" />
-        </form>
-        <form id="form4">
-          <input class="tile" id="form4_0" type="text" maxlength="1" />
-          <input class="tile" id="form4_1" type="text" maxlength="1" />
-          <input class="tile" id="form4_2" type="text" maxlength="1" />
-          <input class="tile" id="form4_3" type="text" maxlength="1" />
-          <input class="tile" id="form4_4" type="text" maxlength="1" />
-        </form>
-        <form id="form5">
-          <input class="tile" id="form5_0" type="text" maxlength="1" />
-          <input class="tile" id="form5_1" type="text" maxlength="1" />
-          <input class="tile" id="form5_2" type="text" maxlength="1" />
-          <input class="tile" id="form5_3" type="text" maxlength="1" />
-          <input class="tile" id="form5_4" type="text" maxlength="1" />
-        </form>
-        <form id="form6">
-          <input class="tile" id="form6_0" type="text" maxlength="1" />
-          <input class="tile" id="form6_1" type="text" maxlength="1" />
-          <input class="tile" id="form6_2" type="text" maxlength="1" />
-          <input class="tile" id="form6_3" type="text" maxlength="1" />
-          <input class="tile" id="form6_4" type="text" maxlength="1" />
-        </form>
+    <div>
+      <div id="board-container">
+        <div class="board" style="width: 350px; height: 420px">
+          <div class="game-row">
+            <form class="row" id="form1">
+              <div class="game-tile">
+                <input class="tile" id="form1_0" type="text" maxlength="1" />
+              </div>
+              <div class="game-tile">
+                <input class="tile" id="form1_1" type="text" maxlength="1" />
+              </div>
+              <div class="game-tile">
+                <input class="tile" id="form1_2" type="text" maxlength="1" />
+              </div>
+              <div class="game-tile">
+                <input class="tile" id="form1_3" type="text" maxlength="1" />
+              </div>
+              <div class="game-tile">
+                <input class="tile" id="form1_4" type="text" maxlength="1" />
+              </div>
+            </form>
+          </div>
+
+          <div class="game-row">
+            <form class="row" id="form2">
+              <input class="tile" id="form2_0" type="text" maxlength="1" />
+              <input class="tile" id="form2_1" type="text" maxlength="1" />
+              <input class="tile" id="form2_2" type="text" maxlength="1" />
+              <input class="tile" id="form2_3" type="text" maxlength="1" />
+              <input class="tile" id="form2_4" type="text" maxlength="1" />
+            </form>
+          </div>
+
+          <div class="game-row">
+            <form class="row" id="form3">
+              <input class="tile" id="form3_0" type="text" maxlength="1" />
+              <input class="tile" id="form3_1" type="text" maxlength="1" />
+              <input class="tile" id="form3_2" type="text" maxlength="1" />
+              <input class="tile" id="form3_3" type="text" maxlength="1" />
+              <input class="tile" id="form3_4" type="text" maxlength="1" />
+            </form>
+          </div>
+
+          <div class="game-row">
+            <form class="row" id="form4">
+              <input class="tile" id="form4_0" type="text" maxlength="1" />
+              <input class="tile" id="form4_1" type="text" maxlength="1" />
+              <input class="tile" id="form4_2" type="text" maxlength="1" />
+              <input class="tile" id="form4_3" type="text" maxlength="1" />
+              <input class="tile" id="form4_4" type="text" maxlength="1" />
+            </form>
+          </div>
+
+          <div class="game-row">
+            <form class="row" id="form5">
+              <input class="tile" id="form5_0" type="text" maxlength="1" />
+              <input class="tile" id="form5_1" type="text" maxlength="1" />
+              <input class="tile" id="form5_2" type="text" maxlength="1" />
+              <input class="tile" id="form5_3" type="text" maxlength="1" />
+              <input class="tile" id="form5_4" type="text" maxlength="1" />
+            </form>
+          </div>
+
+          <div class="game-row">
+            <form class="row" id="form6">
+              <input class="tile" id="form6_0" type="text" maxlength="1" />
+              <input class="tile" id="form6_1" type="text" maxlength="1" />
+              <input class="tile" id="form6_2" type="text" maxlength="1" />
+              <input class="tile" id="form6_3" type="text" maxlength="1" />
+              <input class="tile" id="form6_4" type="text" maxlength="1" />
+            </form>
+          </div>
+        </div>
       </div>
-  </div>
-  <input id="submit_button" type="button" value="Submit"></form>
+    </div>
+
+    <!-- <input id="submit_button" type="button" value="Submit"></form> -->
 
     <script src="./index2.js"></script>
   </body>

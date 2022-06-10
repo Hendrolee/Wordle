@@ -6,8 +6,17 @@ body {
 }
 
 header {
-  font-size: 40px;
+  display: block;
+}
+
+header .title {
+  font-weight: 700;
+  font-size: 37px;
+  line-height: 100%;
+  letter-spacing: 0.01em;
   text-align: center;
+  color: whitesmoke;
+  pointer-events: none;
 }
 
 #board-container {
@@ -19,10 +28,8 @@ header {
 }
 
 .board {
-  background-color: blanchedalmond;
+  background-color: transparent;
 
-  width: 350px;
-  height: 420px;
   display: grid;
   grid-template-rows: repeat(6, 1fr);
   grid-gap: 5px;
@@ -30,11 +37,18 @@ header {
   box-sizing: border-box;
 }
 
-form {
+.game-row {
+  display: block;
+}
+
+.row {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
-  column-gap: 5px;
+  grid-gap: 5px;
+}
+
+.game-tile {
+  display: inline-block;
 }
 
 .tile {
