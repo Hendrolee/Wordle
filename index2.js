@@ -105,7 +105,7 @@ const submitButtonHandler = () => {
     }
   }
 };
-submitButton.addEventListener("click", submitButtonHandler);
+// submitButton.addEventListener("click", submitButtonHandler);
 
 // create submit button handler function //
 // checks validity of words //
