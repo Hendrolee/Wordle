@@ -4,12 +4,12 @@ window.onload = () => {
   document.querySelector("#form1_0").focus();
 };
 
-const answer = "henry";
+const answerString = "henry";
 const inputs = document.querySelectorAll("input");
-let count = 1; // to move input field in querySelector
+let gameCount = 1; // to move input field in querySelector
 const submitButton = document.querySelector("#submit_button");
-let array1 = [];
-const playersName = [
+let inputArray = [];
+const playersNameArray = [
   "amavi",
   "bowen",
   "cisse",
@@ -41,8 +41,8 @@ const playersName = [
 const updateDisplayPanel = () => {
   for (let i = 0; i < 5; i++) {
     document
-      .querySelector(`#form${count}_${i}`)
-      .setAttribute("value", array1[i] || "");
+      .querySelector(`#form${gameCount}_${i}`)
+      .setAttribute("value", inputArray[i] || "");
   }
 
   // if (array1.length) {
@@ -53,28 +53,28 @@ const updateDisplayPanel = () => {
 const keyupHandler = (e) => {
   const key = e.key;
 
-  if (key.length === 1 && key.match(/[a-z]/i) && count < 7) {
-    if (array1.length === 5) {
+  if (key.length === 1 && key.match(/[a-z]/i) && gameCount < 7) {
+    if (inputArray.length === 5) {
       return;
     }
 
-    array1.push(key);
+    inputArray.push(key);
     updateDisplayPanel();
     // console.log("pushing");
   }
 
   if (key === "Backspace") {
-    if (array1.length === 0) {
+    if (inputArray.length === 0) {
       return;
     }
 
-    array1.pop();
+    inputArray.pop();
     updateDisplayPanel();
     // console.log("popping");
   }
 
   if (key === "Enter") {
-    submitButtonHandler();
+    submitButtonHandler(answerString, playersNameArray);
   }
   // console.log("Array", array1);
 };
@@ -84,22 +84,72 @@ inputs.forEach((input) => {
   input.readOnly = true;
 });
 
-const submitButtonHandler = () => {
-  if (array1.length === 5) {
-    let inputString = array1.join("");
+const revealTile = (gameCount, answer) => {
+  // ['h', 'e', 'n', 'r', 'y']
+  const answerArray = answer.split("");
+
+  // filter the matching letter against answer => i.e. [e,n]
+  const matchedLetter = inputArray.filter((letter) =>
+    answerArray.includes(letter)
+  );
+  console.log("matchedLetter:", matchedLetter);
+
+  let matchLetterPosition = matchedLetter.map((letter) =>
+    inputArray.indexOf(letter)
+  );
+  console.log(matchLetterPosition);
+
+  for (let i = 0; i < answerArray.length; i++) {
+    if (answerArray[i] === inputArray[i]) {
+      console.log("green", answerArray[i]);
+      document
+        .querySelector(`#form${gameCount}_${i}`)
+        .setAttribute("style", "background-color:green");
+    } else if (answerArray.includes(inputArray[i])) {
+      console.log("yellow", inputArray[i]);
+      document
+        .querySelector(`#form${gameCount}_${i}`)
+        .setAttribute("style", "background-color:orange");
+    } else {
+      console.log("black", inputArray[i]);
+      document
+        .querySelector(`#form${gameCount}_${i}`)
+        .setAttribute("style", "background-color: gray");
+    }
+  }
+
+  Array.from(document.querySelectorAll("#form1 input")).map((input) => {
+    // let index = answerArray.find((element) => element === input.value);
+    // let value = answerArray.includes(input.value);
+    // if (index) {
+    //   input.setAttribute("style", "background-color:green");
+    // } else if (value) {
+    //   input.setAttribute("style", "background-color:orange");
+    // } else {
+    //   input.setAttribute("style", `background-color: ""`);
+    // }
+    // value ? input.setAttribute("style", "background-color:orange") : "";
+  });
+};
+
+const submitButtonHandler = (answer, playersName) => {
+  if (inputArray.length === 5) {
+    let inputString = inputArray.join("");
     if (inputString === answer) {
+      revealTile(gameCount, answer, inputString);
       console.log("WINN!");
     } else if (inputString !== answer && playersName.includes(inputString)) {
       // reveal tiles function
-
-      // reseting array to empty
-      array1 = [];
+      revealTile(gameCount, answer, inputString);
 
       // count is used for moving to the next form
-      count += 1;
-      console.log(count);
+      gameCount += 1;
+      // console.log(gameCount);
 
       console.log("close!!");
+
+      // reseting array to empty
+      inputArray = [];
     } else {
       console.log("Not a valid player!");
     }
@@ -122,3 +172,28 @@ const submitButtonHandler = () => {
 
 // why there is no selector when all inputs are readOnly ?
 // Because letter is rendered when key is pressed (setAttribute/removeAttribute)
+
+// filter the matching letter against answer => i.e. [e,n]
+// const matchedLetter = inputArray.filter((letter) =>
+// answerArray.includes(letter)
+// );
+// console.log("matchedLetter:", matchedLetter);
+
+// // find the position of matchedLetter
+// let matchLetterPosition = [];
+// matchedLetter.map((letter) => {
+// const position = inputArray.indexOf(letter);
+// matchLetterPosition.push(position);
+// });
+// console.log("matchedLetter position:", matchLetterPosition);
+
+// // positions of answerArray
+// const answerArrayPosition = answerArray.map((letter) =>
+// answerArray.indexOf(letter)
+// );
+// console.log(answerArray);
+
+// compare matchLetterPosition with answerArray position & change the color of the matchedLetter
+
+// Fix :
+// duplicate alphabets in single alphabet answer
