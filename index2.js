@@ -4,7 +4,7 @@ window.onload = () => {
   document.querySelector("#form1_0").focus();
 };
 
-const answerString = "henry";
+const answerString = "neuer";
 const inputs = document.querySelectorAll("input");
 let gameCount = 1; // to move input field in querySelector
 const submitButton = document.querySelector("#submit_button");
@@ -20,7 +20,7 @@ const playersNameArray = [
   "henry",
   "iwobi",
   "jones",
-  "kante",
+  "eante",
   "lopez",
   "messi",
   "neuer",
@@ -84,53 +84,86 @@ inputs.forEach((input) => {
   input.readOnly = true;
 });
 
-const revealTile = (gameCount, answer) => {
-  // ['h', 'e', 'n', 'r', 'y']
+const convertToObject = (string) => {
+  const array = string.split("");
+  const object = { ...array };
+  return object;
+};
+
+const sortObject = (object) => {
+  const obj = Object.entries(object).map((entry) => {
+    const [key, value] = entry;
+    return { letter: value, position: key };
+  });
+  return obj;
+};
+
+// Check whether a letter exist more than 1 (duplication)
+const duplicationCheck = (array) => {
+  const result = {};
+  let boolean = false;
+
+  const reducedArray = array.reduce((array, element) => {
+    let newElementEntry = result.hasOwnProperty(element);
+    !newElementEntry ? (result[element] = 1) : (result[element] += 1);
+    return array;
+  }, result);
+
+  const valuesArray = Object.values(result);
+  const newMaxValue = Math.max(...valuesArray);
+  if (newMaxValue === 1) {
+    // return newMaxValue;
+    return boolean;
+  } else {
+    boolean = true;
+  }
+  return boolean;
+};
+
+const revealTile = (gameCount, answer, inputString) => {
   const answerArray = answer.split("");
+  const answerObject = convertToObject(answer);
+  const inputObject = convertToObject(inputString);
 
-  // filter the matching letter against answer => i.e. [e,n]
-  const matchedLetter = inputArray.filter((letter) =>
-    answerArray.includes(letter)
-  );
-  console.log("matchedLetter:", matchedLetter);
+  const answerSorted = sortObject(answerObject);
+  const inputSorted = sortObject(inputObject);
+  console.log(answerSorted);
+  console.log(inputSorted);
 
-  let matchLetterPosition = matchedLetter.map((letter) =>
-    inputArray.indexOf(letter)
-  );
-  console.log(matchLetterPosition);
+  let arrayExisted = [];
+  for (let i = 0; i < answer.length; i++) {
+    if (answerSorted[i].letter === inputSorted[i].letter) {
+      // console.log("green", inputSorted[i]);
 
-  for (let i = 0; i < answerArray.length; i++) {
-    if (answerArray[i] === inputArray[i]) {
-      console.log("green", answerArray[i]);
+      // If answer letter has no duplicates
+      // Insert into arrayExisted
+      if (!duplicationCheck(answerArray)) {
+        arrayExisted.push(inputSorted[i].letter);
+        console.log("exist", arrayExisted);
+      }
+
       document
         .querySelector(`#form${gameCount}_${i}`)
-        .setAttribute("style", "background-color:green");
-    } else if (answerArray.includes(inputArray[i])) {
-      console.log("yellow", inputArray[i]);
+        .setAttribute("style", "background-color: green");
+    } else if (
+      // if input letter is found on answer letter
+      answerSorted.some(
+        (element) => element.letter === inputSorted[i].letter
+      ) &&
+      // if input letter is not found in arrayExisted
+      !arrayExisted.includes(inputSorted[i].letter)
+    ) {
       document
         .querySelector(`#form${gameCount}_${i}`)
-        .setAttribute("style", "background-color:orange");
+        .setAttribute("style", "background-color: orange");
     } else {
-      console.log("black", inputArray[i]);
       document
         .querySelector(`#form${gameCount}_${i}`)
         .setAttribute("style", "background-color: gray");
     }
   }
-
-  Array.from(document.querySelectorAll("#form1 input")).map((input) => {
-    // let index = answerArray.find((element) => element === input.value);
-    // let value = answerArray.includes(input.value);
-    // if (index) {
-    //   input.setAttribute("style", "background-color:green");
-    // } else if (value) {
-    //   input.setAttribute("style", "background-color:orange");
-    // } else {
-    //   input.setAttribute("style", `background-color: ""`);
-    // }
-    // value ? input.setAttribute("style", "background-color:orange") : "";
-  });
 };
+// !arrayExisted.includes(inputSorted[i].letter)
 
 const submitButtonHandler = (answer, playersName) => {
   if (inputArray.length === 5) {
@@ -197,3 +230,72 @@ const submitButtonHandler = (answer, playersName) => {
 
 // Fix :
 // duplicate alphabets in single alphabet answer
+
+// const revealTile = (gameCount, answer) => {
+//   // ['h', 'e', 'n', 'r', 'y']
+//   const answerArray = answer.split("");
+
+//   // filter the matching letter against answer => i.e. [e,n]
+//   const matchedLetter = inputArray.filter((letter) =>
+//     answerArray.includes(letter)
+//   );
+//   console.log("matchedLetter:", matchedLetter);
+
+//   let matchLetterPosition = matchedLetter.map((letter) =>
+//     inputArray.indexOf(letter)
+//   );
+//   console.log(matchLetterPosition);
+
+//   for (let i = 0; i < answerArray.length; i++) {
+//     if (answerArray[i] === inputArray[i]) {
+//       console.log("green", answerArray[i]);
+//       document
+//         .querySelector(`#form${gameCount}_${i}`)
+//         .setAttribute("style", "background-color:green");
+//     } else if (answerArray.includes(inputArray[i])) {
+//       console.log("yellow", inputArray[i]);
+//       document
+//         .querySelector(`#form${gameCount}_${i}`)
+//         .setAttribute("style", "background-color:orange");
+//     } else {
+//       console.log("black", inputArray[i]);
+//       document
+//         .querySelector(`#form${gameCount}_${i}`)
+//         .setAttribute("style", "background-color: gray");
+//     }
+//   }
+
+//   Array.from(document.querySelectorAll("#form1 input")).map((input) => {
+//     // let index = answerArray.find((element) => element === input.value);
+//     // let value = answerArray.includes(input.value);
+//     // if (index) {
+//     //   input.setAttribute("style", "background-color:green");
+//     // } else if (value) {
+//     //   input.setAttribute("style", "background-color:orange");
+//     // } else {
+//     //   input.setAttribute("style", `background-color: ""`);
+//     // }
+//     // value ? input.setAttribute("style", "background-color:orange") : "";
+//   });
+// };
+
+// for (let i = 0; i < answer.length; i++) {
+//   if (answerSorted[i].letter === inputSorted[i].letter) {
+//     console.log("green");
+//     document
+//       .querySelector(`#form${gameCount}_${i}`)
+//       .setAttribute("style", "background-color: green");
+//   }
+// else if (
+
+// ) {
+//   console.log("yellow");
+//   document
+//     .querySelector(`#form${gameCount}_${i}`)
+//     .setAttribute("style", "background-color: orange");
+// }
+// }
+
+// fix :
+// when duplicate letter comes before green letter
+// when there are multiple duplicates
