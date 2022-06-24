@@ -5,7 +5,7 @@ window.onload = () => {
 };
 
 const answerString = "neuer";
-const inputs = document.querySelectorAll("input");
+const answerArray = answerString.split("");
 let gameCount = 1; // to move input field in querySelector
 const submitButton = document.querySelector("#submit_button");
 let inputArray = [];
@@ -53,106 +53,33 @@ const updateDisplayPanel = () => {
 const keyupHandler = (e) => {
   const key = e.key;
 
-  if (key.length === 1 && key.match(/[a-z]/i) && gameCount < 7) {
-    if (inputArray.length === 5) {
-      return;
-    }
-
+  if (
+    key.length === 1 &&
+    key.match(/[a-z]/i) &&
+    gameCount < 7 &&
+    inputArray.length !== 5
+  ) {
     inputArray.push(key);
     updateDisplayPanel();
-    // console.log("pushing");
   }
 
-  if (key === "Backspace") {
-    if (inputArray.length === 0) {
-      return;
-    }
-
+  if (key === "Backspace" && inputArray.length !== 0) {
     inputArray.pop();
     updateDisplayPanel();
-    // console.log("popping");
   }
 
-  if (key === "Enter") {
-    submitButtonHandler(answerString, playersNameArray);
+  if (key === "Enter" && inputArray.length === 5) {
+    submitButtonHandler();
   }
-  // console.log("Array", array1);
 };
 
-inputs.forEach((input) => {
-  input.addEventListener("keyup", keyupHandler);
-  input.readOnly = true;
-});
-
-const convertToObject = (string) => {
-  const array = string.split("");
-  const object = { ...array };
-  return object;
-};
-
-const sortObject = (object) => {
-  const obj = Object.entries(object).map((entry) => {
-    const [key, value] = entry;
-    return { letter: value, position: key };
-  });
-  return obj;
-};
-
-// Check whether a letter exist more than 1 (duplication)
-const duplicationCheck = (array) => {
-  const result = {};
-  let boolean = false;
-
-  const reducedArray = array.reduce((array, element) => {
-    let newElementEntry = result.hasOwnProperty(element);
-    !newElementEntry ? (result[element] = 1) : (result[element] += 1);
-    return array;
-  }, result);
-
-  const valuesArray = Object.values(result);
-  const newMaxValue = Math.max(...valuesArray);
-  if (newMaxValue === 1) {
-    // return newMaxValue;
-    return boolean;
-  } else {
-    boolean = true;
-  }
-  return boolean;
-};
-
-const revealTile = (gameCount, answer, inputString) => {
-  const answerArray = answer.split("");
-  const answerObject = convertToObject(answer);
-  const inputObject = convertToObject(inputString);
-
-  const answerSorted = sortObject(answerObject);
-  const inputSorted = sortObject(inputObject);
-  console.log(answerSorted);
-  console.log(inputSorted);
-
-  let arrayExisted = [];
-  for (let i = 0; i < answer.length; i++) {
-    if (answerSorted[i].letter === inputSorted[i].letter) {
-      // console.log("green", inputSorted[i]);
-
-      // If answer letter has no duplicates
-      // Insert into arrayExisted
-      if (!duplicationCheck(answerArray)) {
-        arrayExisted.push(inputSorted[i].letter);
-        console.log("exist", arrayExisted);
-      }
-
+const revealTile = (gameCount) => {
+  for (let i = 0; i < answerArray.length; i++) {
+    if (answerArray[i] === inputArray[i]) {
       document
         .querySelector(`#form${gameCount}_${i}`)
         .setAttribute("style", "background-color: green");
-    } else if (
-      // if input letter is found on answer letter
-      answerSorted.some(
-        (element) => element.letter === inputSorted[i].letter
-      ) &&
-      // if input letter is not found in arrayExisted
-      !arrayExisted.includes(inputSorted[i].letter)
-    ) {
+    } else if (answerArray.includes(inputArray[i])) {
       document
         .querySelector(`#form${gameCount}_${i}`)
         .setAttribute("style", "background-color: orange");
@@ -163,31 +90,35 @@ const revealTile = (gameCount, answer, inputString) => {
     }
   }
 };
-// !arrayExisted.includes(inputSorted[i].letter)
 
-const submitButtonHandler = (answer, playersName) => {
-  if (inputArray.length === 5) {
-    let inputString = inputArray.join("");
-    if (inputString === answer) {
-      revealTile(gameCount, answer, inputString);
-      console.log("WINN!");
-    } else if (inputString !== answer && playersName.includes(inputString)) {
-      // reveal tiles function
-      revealTile(gameCount, answer, inputString);
+const submitButtonHandler = () => {
+  let inputString = inputArray.join("");
+  if (inputString === answerString) {
+    revealTile(gameCount);
+    console.log("WINN!");
+  } else if (
+    inputString !== answerString &&
+    playersNameArray.includes(inputString)
+  ) {
+    // reveal tiles function
+    revealTile(gameCount);
 
-      // count is used for moving to the next form
-      gameCount += 1;
-      // console.log(gameCount);
+    // count is used for moving to the next form
+    gameCount += 1;
+    console.log("close!!");
 
-      console.log("close!!");
-
-      // reseting array to empty
-      inputArray = [];
-    } else {
-      console.log("Not a valid player!");
-    }
+    // reseting array to empty
+    inputArray = [];
+  } else {
+    console.log("Not a valid player!");
   }
 };
+
+document.querySelectorAll("input").forEach((input) => {
+  input.addEventListener("keyup", keyupHandler);
+  input.readOnly = true;
+});
+
 // submitButton.addEventListener("click", submitButtonHandler);
 
 // create submit button handler function //
