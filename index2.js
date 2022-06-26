@@ -37,6 +37,7 @@ const playersNameArray = [
   "xhaka",
   "yerry",
   "zouma",
+  "hendo",
 ];
 
 const updateDisplayPanel = () => {
@@ -78,7 +79,7 @@ const revealTile = (gameCount) => {
     const tempAnswerIndex = tempAnswerArray.indexOf(letter);
 
     if (letter === tempAnswerArray[i]) {
-      tempAnswerArray.splice(tempAnswerIndex, 1);
+      tempAnswerArray.splice(tempAnswerIndex, 1, "");
       document
         .querySelector(`#form${gameCount}_${i}`)
         .setAttribute("style", "background-color:green");
